@@ -43,3 +43,9 @@
 		</form>
 	</div>
 </div>
+
+<script>
+	$(document).ready(function() {
+		
+	}); // 레디이벤트
+</script>
