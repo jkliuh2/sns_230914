@@ -12,10 +12,11 @@
 					<div class="d-flex align-items-center">
 						<input type="text" name="loginId" placeholder="ID를 입력해주세요."
 							class="form-control col-7">
-						<!-- 중복확인 버튼 -->
+						<%-- 중복확인 버튼 --%>
 						<small><button type="button" id="loginId-check-btn"
 								class="btn btn-primary btn-sm ml-3">중복확인</button></small>
 					</div>
+					<%-- 중복확인 관련 메시지 3종 --%>
 					<small id="loginId-dupl-message" class="dupl-message text-danger d-none">
 						사용중인 아이디입니다.
 					</small>
@@ -27,21 +28,20 @@
 					</small>
 				</div>
 				<div class="m-2">
-					<label>password</label> <input type="password" name="password"
-						placeholder="****" class="form-control col-6">
+					<label>password</label> 
+					<input type="password" name="password" placeholder="****" class="form-control col-6">
 				</div>
 				<div class="m-2">
-					<label>confirm password</label> <input type="password"
-						id="confirmPassword" placeholder="****"
-						class="form-control col-6">
+					<label>confirm password</label> 
+					<input type="password" id="confirmPassword" placeholder="****" class="form-control col-6">
 				</div>
 				<div class="m-2">
-					<label>이름</label> <input type="text" name="name"
-						placeholder="이름을 입력해주세요" class="form-control col-7">
+					<label>이름</label> 
+					<input type="text" name="name" placeholder="이름을 입력해주세요" class="form-control col-7">
 				</div>
 				<div class="m-2">
-					<label>이메일</label> <input type="text" name="email"
-						placeholder="이메일을 입력해주세요" class="form-control col-7">
+					<label>이메일</label> 
+					<input type="text" name="email" placeholder="이메일을 입력해주세요" class="form-control col-7">
 				</div>
 				<div class="m-2 d-flex justify-content-center">
 					<input type="submit" value="가입하기" class="btn btn-primary">
@@ -81,7 +81,7 @@
 					}
 				} else {
 					// 확인 실패할때
-					alert(data.error_message);
+					alert("중복확인에 실패했습니다. 관리자에게 문의하세요.");
 				}
 			});
 			
@@ -135,7 +135,7 @@
 				
 				if (data.code == 200) {
 					alert("가입을 환영합니다. 로그인 해주세요.");
-					location.href="/user/sign-up-view";
+					location.href="/user/sign-ㅑㅜ-view";
 				} else {
 					alert(data.error_message);
 				}
