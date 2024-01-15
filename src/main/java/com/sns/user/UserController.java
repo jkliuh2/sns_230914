@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/user")
 @Controller
 public class UserController {
+// view용 컨트롤러
 
 	// 로그인 화면 view
 	// url: http://localhost:8080/user/sign-in-view
