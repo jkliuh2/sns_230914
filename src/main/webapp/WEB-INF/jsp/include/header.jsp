@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%-- header 영역 --%>
 <div class="d-flex h-100 w-100">
 	<!-- logo 영역 -->
@@ -8,10 +9,17 @@
 	</div>
 	<!-- 중간 영역 -->
 	<div id="hello-user" class="col-5 d-flex justify-content-end align-items-center">
-		<span class="font-weight-bold">${userName}님 안녕하세요!</span>
+		<c:if test="${not empty userName}">
+			<span class="font-weight-bold">${userName}님 안녕하세요!</span>
+		</c:if>
 	</div>
 	<!-- 로그인or로그아웃 영역 -->
 	<div id="log-in-out" class="col-2 d-flex justify-content-center align-items-center">
-		<a id="sign-in-out" href="#">로그인</a>
+		<c:if test="${not empty userName}">
+			<a class="sign-in-out" href="/user/sign-out">로그아웃</a>
+		</c:if>
+		<c:if test="${empty userName}">
+			<a class="sign-in-out" href="/user/sign-in-view">로그인</a>
+		</c:if>
 	</div>
 </div>

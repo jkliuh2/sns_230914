@@ -4,13 +4,16 @@ header {height: 60px; background-color: #e0e0e0;}
 .contents {min-height: 300px;}
 footer {height: 50px;}
 
+/* 뒷배경 색 클래스 */
+.back-color {background-color: #e0e0e0;}
+
 /* logo <a>링크 */
 #logo {color: #000;}
 #logo:hover {text-decoration: none;}
 
 /* header부분 로그인/로그아웃 <a> 폰트 부분 */
-#sign-in-out {color: #555; text-decoration: underline;}
-#sign-in-out:hover {text-decoration: none;}
+.sign-in-out {color: #555; text-decoration: underline;}
+.sign-in-out:hover {text-decoration: none;}
 
 /* <a> 밑줄 삭제 클래스 (나중에 필요 없으면 지워도 될듯 */
 .underline-none {text-decoration: none;}
@@ -20,3 +23,7 @@ footer {height: 50px;}
 .border-box {width: 520px; min-height: 220px; padding: 20px;}
 #login-input-box {width: 220px;}
 .log-in-btn {width:100px;}
+
+/* timeline 영역 css */
+#post-list-header {background-color: #e0e0e0;}
+.post-img {width:320px; height:240; object-fit: cover;}

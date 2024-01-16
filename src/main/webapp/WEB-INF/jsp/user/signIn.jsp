@@ -55,7 +55,7 @@
 			.done(function(data) {
 				if (data.code == 200) {
 					// 로그인 성공
-					location.href="/timeline-list-view";
+					location.href="/timeline/timeline-view";
 				} else {
 					// 로그인 실패
 					alert(data.error_message);
