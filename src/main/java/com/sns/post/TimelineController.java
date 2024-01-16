@@ -12,7 +12,7 @@ import jakarta.servlet.http.HttpSession;
 public class TimelineController {
 // view Controller
 	
-	
+	// 타임라인 목록
 	// url: http://localhost:8080/timeline/timeline-view
 	@GetMapping("timeline-view")
 	public String timelineView(Model model, HttpSession session) {
