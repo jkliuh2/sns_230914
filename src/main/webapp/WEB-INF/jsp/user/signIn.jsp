@@ -34,6 +34,18 @@
 			e.preventDefault(); // submit 기능 막기
 			//alert("로그인");
 			
+			// validation check
+			let loginId = $('input[name=loginId]').val().trim();
+			let password = $('input[name=password]').val();
+			if (!loginId) {
+				alert("Id를 입력하세요.");
+				return false;
+			}
+			if (!password) {
+				alert("비밀번호를 입력하세요.");
+				return false;
+			}
+			
 			// AJAX - select 후 로그인
 			//let loginId = $('input[name=loginId]').val();
 			//let password = $('input[name=password]').val();
@@ -41,7 +53,13 @@
 			let params = $(this).serialize();
 			$.post(url, params)
 			.done(function(data) {
-				
+				if (data.code == 200) {
+					// 로그인 성공
+					location.href="/timeline-list-view";
+				} else {
+					// 로그인 실패
+					alert(data.error_message);
+				}
 			}); // AJAX 끝
 			
 		}); // 로그인 버튼 클릭이벤트 끝

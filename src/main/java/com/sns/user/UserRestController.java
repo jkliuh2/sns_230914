@@ -13,6 +13,9 @@ import com.sns.common.EncryptUtils;
 import com.sns.user.Entity.UserEntity;
 import com.sns.user.bo.UserBO;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
+
 @RequestMapping("/user")
 @RestController
 public class UserRestController {
@@ -81,4 +84,40 @@ public class UserRestController {
 		return result;
 	}
 	
+	
+	// 로그인
+	@PostMapping("/sign-in")
+	public Map<String, Object> signIn(
+			@RequestParam("loginId") String loginId,
+			@RequestParam("password") String password,
+			HttpServletRequest request
+			) {
+		
+		// 비밀번호 암호화
+		String hashingPassword = EncryptUtils.md5(password);
+		
+		// DB select (null or UserEntity)
+		UserEntity user = userBO.getUserEntityByLoginIdPassword(loginId, hashingPassword);
+		
+		// 응답값 + 로그인 처리
+		Map<String, Object> result = new HashMap<>();
+		if (user != null) {
+			// 로그인 성공
+			// 로그인 정보 세션에 담기
+			HttpSession session = request.getSession();
+			session.setAttribute("userId", user.getId());
+			session.setAttribute("userLoginId", user.getLoginId());
+			session.setAttribute("userName", user.getName());
+			// 응답으로 내려주는 정보 작성
+			result.put("code", 200);
+			result.put("result", "성공");
+		} else {
+			// 로그인 실패
+			result.put("code", 300);
+			result.put("error_message", "존재하지 않는 사용자입니다.");
+		}
+		
+		// 리턴
+		return result;
+	}
 }

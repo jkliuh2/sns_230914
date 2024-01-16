@@ -8,7 +8,7 @@
 	</div>
 	<!-- 중간 영역 -->
 	<div id="hello-user" class="col-5 d-flex justify-content-end align-items-center">
-		<span class="font-weight-bold">회원 님 안녕하세요!</span>
+		<span class="font-weight-bold">${userName}님 안녕하세요!</span>
 	</div>
 	<!-- 로그인or로그아웃 영역 -->
 	<div id="log-in-out" class="col-2 d-flex justify-content-center align-items-center">

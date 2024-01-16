@@ -135,7 +135,7 @@
 				
 				if (data.code == 200) {
 					alert("가입을 환영합니다. 로그인 해주세요.");
-					location.href="/user/sign-ㅑㅜ-view";
+					location.href="/user/sign-in-view";
 				} else {
 					alert(data.error_message);
 				}

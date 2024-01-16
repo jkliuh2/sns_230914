@@ -8,4 +8,7 @@ public interface UserRepository extends JpaRepository<UserEntity, Integer> {
 
 	// input:loginId / output:UserEntity(단건)
 	public UserEntity findByLoginId(String loginId);
+	
+	// input:loginId, password / output: UserEntity
+	public UserEntity findByLoginIdAndPassword(String loginId, String password);
 }
