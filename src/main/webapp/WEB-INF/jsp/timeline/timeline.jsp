@@ -6,12 +6,23 @@
 		<%-- 로그인 상태일 때 보이는 글 쓰기 상자 --%>
 		<c:if test="${not empty userId}">
 		<div id="post-box" class="border rounded m-3">
-			<textarea id="content" name="content" rows="3" placeholder="내용을 입력해주세요." class="w-100 border-0"></textarea>
+			<%-- content --%>
+			<textarea id="content" rows="5" placeholder="내용을 입력해주세요." class="w-100 border-0"></textarea>
 			<div class="d-flex justify-content-between p-2">
-				<div class="file-upload d-flex">
-					<a href="#" id="fileUploadBtn"><img src="/static/img/img-icon.png" alt="이미지 아이콘" width="24"></a>
+				<%-- 그림 업로드 --%>
+				<div class="file-upload d-flex align-items-center">
+					<%-- 업로드 버튼 --%>
+					<label for="img-file">
+						<div id="upload-img-div">
+							<img src="/static/img/img-icon.png" alt="이미지 아이콘" width="24" height="24">
+						</div>
+					</label>
+					<%-- 그림 file input --%>
+					<input type="file" id="img-file" name="img-file" accept=".jpg, .png, .gif, .jpeg">
+					<small id="imgUploadCheck" class="text-primary font-weight-bold ml-2 d-none">그림 파일 업로드</small>
 				</div>
-				<button type="submit" class="btn btn-primary btn-sm">업로드</button>				
+				<%-- 업로드 버튼 --%>
+				<button id="uploadBtn" type="button" class="btn btn-primary btn-sm">업로드</button>				
 			</div>
 		</div>
 		</c:if> <%-- 글 쓰기 상자 끝 --%>
@@ -51,7 +62,7 @@
 				<%-- 글 내용 --%>
 				<div class="card-post m-3">
 					<span class="font-weight-bold">글쓴이</span>
-					<span>글 내용</span>
+					<span>${post.content}</span>
 				</div>
 				
 				<%-- 댓글 header 부분 --%>
@@ -80,3 +91,80 @@
 		</div> <%-- 타임라인 영역 끝 --%>
 	</div> <%-- content-box 끝 --%>
 </div>
+
+<script>
+	$(document).ready(function() {
+		
+		// 업로드 버튼 클릭 - post insert
+		$('#uploadBtn').on('click', function() {
+			//alert("업로드");
+			
+			let content = $('#content').val().trim();
+			let fileName = $('#img-file').val();
+			
+			// validation check
+			if (!content && !fileName) {
+				alert("내용과 그림 중 하나는 입력되어야 합니다.");
+				return;
+			}
+			// 파일이 업로드 된 경우에만 확장자 체크
+			if (fileName) {
+				// 확장자만 빼오기 (jpg)
+				let extension = fileName.split(".").pop().toLowerCase();
+				
+				if ($.inArray(extension, ['jpg', 'png', 'gif', 'jpeg']) == -1) {
+					// 정해진 확장자가 아닐 경우
+					alert("이미지 파일만 업로드 할 수 있습니다.");
+					$('#img-file').val("");
+					return;
+				}
+			}
+			
+			// FormData
+			let formData = new FormData();
+			formData.append("content", content);
+			formData.append("file", $('#img-file')[0].files[0]);
+			
+			// AJAX - insert
+			$.ajax({
+				// request
+				type:"POST"
+				, url:"/post/create"
+				, data:formData
+				, enctype:"multipart/form-data"
+				, processData:false
+				, contentType:false
+				
+				// response
+				, success:function(data) {
+					if (data.code == 200) {
+						alert("타임라인을 작성하였습니다.");
+						location.reload();
+					} else {
+						alert(data.error_message);
+					}
+				}
+				, error(request, status, error) {
+					alert("타임라인 저장에 실패했습니다. 관리자에게 문의해주세요.");
+				}
+			}); // AJAX-insert 끝
+			
+		}); // 업로드 버튼 끝
+		
+		
+		// 그림파일 input 변경 이벤트
+		$('#img-file').on('change', function() {
+			//lert("그림파일 변경");
+			
+			// 업로드 글자표시 생성
+			$('#imgUploadCheck').addClass("d-none");
+			
+			let fileCheck = $(this).val();
+			if (fileCheck) {
+				// 업로드 파일 존재
+				$('#imgUploadCheck').removeClass("d-none"); // 글자 생성
+			} 
+		}); // 그림파일 변경 이벤트 끝
+		
+	}); // 레디이벤트 끝
+</script>

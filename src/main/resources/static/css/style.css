@@ -26,3 +26,7 @@ footer {height: 50px;}
 
 /* timeline 영역 css */
 #post-list-header {background-color: #e0e0e0;}
+
+/* 이미지file input 관련 css */
+#upload-img-div {cursor:pointer;}
+#img-file {display:none;}

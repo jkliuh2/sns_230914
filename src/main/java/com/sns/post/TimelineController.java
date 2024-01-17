@@ -11,8 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.sns.post.bo.PostBO;
 import com.sns.post.entity.PostEntity;
 
-import jakarta.servlet.http.HttpSession;
-
 @RequestMapping("/timeline")
 @Controller
 public class TimelineController {

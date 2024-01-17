@@ -8,5 +8,5 @@ import com.sns.post.entity.PostEntity;
 
 public interface PostRepository extends JpaRepository<PostEntity, Integer> {
 
-	public List<PostEntity> findAllOrderByIdDesc();
+	public List<PostEntity> findAllByOrderByIdDesc();
 }
