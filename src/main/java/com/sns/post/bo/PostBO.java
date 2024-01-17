@@ -5,18 +5,18 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.sns.post.domain.Post;
-import com.sns.post.mapper.PostMapper;
+import com.sns.post.entity.PostEntity;
+import com.sns.post.repository.PostRepository;
 
 @Service
 public class PostBO {
 	
 	@Autowired
-	private PostMapper postMapper;
+	private PostRepository postRepository;
 
 	// 모든 글 Select(최신순)
-	// input:X / output:List<Post>
-	public List<Post> getPostListOrderByDesc() {
-		return postMapper.selectPostListOrderByDesc();
+	// input:X / output:List<PostEntity>
+	public List<PostEntity> getPostListOrderByIdDesc() {
+		return postRepository.findAllOrderByIdDesc();
 	}
 }

@@ -19,13 +19,14 @@
 		
 		<%-- timeline 영역 --%>
 		<div class="my-5">
-			<%-- 카드 --%>
+			<c:forEach items="${postList}" var="post">
+			<%-- 카드(반복되는 부분) --%>
 			<div class="card border rounded mt-3">
 				<%-- 글쓴이, 더보기(삭제) --%>
 				<div class="d-flex justify-content-between px-2 back-color">
 					<%-- post 글쓴이 --%>
 					<div>
-						<span class="font-weight-bold">글쓴이</span>
+						<span class="font-weight-bold">${post.userId}</span>
 					</div>
 					<%-- 삭제 더보기 버튼 --%>
 					<div>
@@ -75,6 +76,7 @@
 					</c:forEach> <%-- 반복문 끝 --%>
 				</div><%-- 댓글 목록 끝 --%>
 			</div> <%-- 카드 영역 끝 --%>
+			</c:forEach>
 		</div> <%-- 타임라인 영역 끝 --%>
 	</div> <%-- content-box 끝 --%>
 </div>

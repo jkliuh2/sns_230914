@@ -8,17 +8,4 @@
  	FROM
  		`post`
  	</select>
- 	
- 	<select id="selectPostListOrderByDesc" resultType="com.sns.post.domain.Post">
- 	SELECT
- 		`id`
-		,`userId`
-		,`content`
-		,`imagePath`
-		,`createdAt`
-		,`updatedAt`
-	FROM
-		`post`
-	ORDER BY `id`
- 	</select>
  </mapper>
