@@ -1,5 +1,4 @@
 @charset "UTF-8";
-#wrap {width:800px;}
 header {height: 60px; background-color: #e0e0e0;}
 .contents {min-height: 300px;}
 footer {height: 50px;}
@@ -25,8 +24,5 @@ footer {height: 50px;}
 .log-in-btn {width:100px;}
 
 /* timeline 영역 css */
+.content-box {width:650px;}
 #post-list-header {background-color: #e0e0e0;}
-
-/* 이미지file input 관련 css */
-#upload-img-div {cursor:pointer;}
-#img-file {display:none;}

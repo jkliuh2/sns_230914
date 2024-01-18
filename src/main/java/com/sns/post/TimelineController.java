@@ -18,6 +18,7 @@ public class TimelineController {
 	
 	@Autowired
 	private PostBO postBO;
+
 	
 	// 타임라인 목록
 	// url: http://localhost:8080/timeline/timeline-view

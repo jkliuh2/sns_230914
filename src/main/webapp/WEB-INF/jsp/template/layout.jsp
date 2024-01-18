@@ -15,7 +15,7 @@
 <link rel="stylesheet" type="text/css" href="/static/css/style.css">
 </head>
 <body>
-    <div id="wrap" class="container">
+    <div id="wrap">
         <!-- header 영역 -->
         <header>
             <jsp:include page="../include/header.jsp" />

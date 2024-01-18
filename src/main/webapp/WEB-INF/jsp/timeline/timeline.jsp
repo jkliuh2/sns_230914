@@ -2,24 +2,23 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <div class="d-flex justify-content-center">
-	<div class="content-box w-50">
+	<div class="content-box">
 		<%-- 로그인 상태일 때 보이는 글 쓰기 상자 --%>
 		<c:if test="${not empty userId}">
 		<div id="post-box" class="border rounded m-3">
-			<%-- content --%>
+			<%-- content 영역 --%>
 			<textarea id="content" rows="5" placeholder="내용을 입력해주세요." class="w-100 border-0"></textarea>
 			<div class="d-flex justify-content-between p-2">
-				<%-- 그림 업로드 --%>
+				<%-- 그림 업로드 영역 --%>
 				<div class="file-upload d-flex align-items-center">
 					<%-- 업로드 버튼 --%>
-					<label for="img-file">
-						<div id="upload-img-div">
-							<img src="/static/img/img-icon.png" alt="이미지 아이콘" width="24" height="24">
-						</div>
-					</label>
+					<a href="#" id="fileUploadBtn">
+						<img src="/static/img/img-icon.png" alt="이미지 아이콘" width="24" height="24">
+					</a>
 					<%-- 그림 file input --%>
-					<input type="file" id="img-file" name="img-file" accept=".jpg, .png, .gif, .jpeg">
-					<small id="imgUploadCheck" class="text-primary font-weight-bold ml-2 d-none">그림 파일 업로드</small>
+					<input type="file" id="file" accept=".jpg, .png, .gif, .jpeg" class="d-none">
+					<%-- 업로드 된 임시 이미지 파일 이름 나타내는 곳 --%>
+					<div id="file-name" class="ml-2"></div>
 				</div>
 				<%-- 업로드 버튼 --%>
 				<button id="uploadBtn" type="button" class="btn btn-primary btn-sm">업로드</button>				
@@ -49,11 +48,11 @@
 				
 				<%-- 이미지  --%>
 				<div class="card-img">
-					<img class="w-100" src="/static/img/post1.webp" alt="게시글 이미지">
+					<img class="w-100" src="${post.imagePath}" alt="게시글 이미지">
 				</div>
 				<%-- 좋아요 --%>
 				<div class="card-like m-3">
-					<a href="#" class="like-btn">
+					<a href="#" id="like-btn">
 						<img src="/static/img/empty-heart.png" alt="좋아요" width="18" height="18">
 					</a>
 					<span class="font-weight-bold">좋아요 n개</span>
@@ -72,7 +71,7 @@
 				
 				<%-- 댓글 목록 --%>
 				<div class="card-comment-list m-2">
-					<%-- 반복문 시작지점 --%>
+					<%-- 댓글 반복문 시작지점 --%>
 					<c:forEach begin="1" end="3" var="i">
 					<%-- 댓글 내용 --%>
 					<div class="card-comment m-1">
@@ -84,10 +83,20 @@
 							<img src="/static/img/delete-button-x.png" width="10" height="10">
 						</a>
 					</div><%-- 댓글 내용 끝 --%>
-					</c:forEach> <%-- 반복문 끝 --%>
+					</c:forEach> <%-- 댓글 반복문 끝 --%>
+					
+					<%-- 댓글 쓰기 영역 --%>
+					<div>
+						<form class="commentCreateForm" method="post" action="/comment/create">
+							<input type="text" name="content" class="form-control">
+							<button type="submit" data-post-id="${post.id}" class="commentBtn btn btn-info">게시</button>
+						</form>
+					</div>
+					
 				</div><%-- 댓글 목록 끝 --%>
 			</div> <%-- 카드 영역 끝 --%>
 			</c:forEach>
+			
 		</div> <%-- 타임라인 영역 끝 --%>
 	</div> <%-- content-box 끝 --%>
 </div>
@@ -95,12 +104,21 @@
 <script>
 	$(document).ready(function() {
 		
+		// 댓글 쓰기 버튼 클릭 이벤트(form)
+		$('.commentCreateForm').submit(function(e) {
+			e.preventDefault();
+			let buttonId = $(this).data("post-id");
+			alert(buttonId);
+		});
+		
+		
+		
 		// 업로드 버튼 클릭 - post insert
 		$('#uploadBtn').on('click', function() {
 			//alert("업로드");
 			
 			let content = $('#content').val().trim();
-			let fileName = $('#img-file').val();
+			let fileName = $('#file').val();
 			
 			// validation check
 			if (!content && !fileName) {
@@ -115,7 +133,7 @@
 				if ($.inArray(extension, ['jpg', 'png', 'gif', 'jpeg']) == -1) {
 					// 정해진 확장자가 아닐 경우
 					alert("이미지 파일만 업로드 할 수 있습니다.");
-					$('#img-file').val("");
+					$('#file').val("");
 					return;
 				}
 			}
@@ -123,7 +141,7 @@
 			// FormData
 			let formData = new FormData();
 			formData.append("content", content);
-			formData.append("file", $('#img-file')[0].files[0]);
+			formData.append("file", $('#file')[0].files[0]);
 			
 			// AJAX - insert
 			$.ajax({
@@ -152,19 +170,47 @@
 		}); // 업로드 버튼 끝
 		
 		
-		// 그림파일 input 변경 이벤트
-		$('#img-file').on('change', function() {
-			//lert("그림파일 변경");
+		// 파일 이미지 업로드 버튼 클릭이벤트
+		$('#fileUploadBtn').on('click', function(e) {
+			// 파일 이미지 클릭 => 숨겨져 있는 id="file" 동작시킨다.
+			e. preventDefault(); // <a> 태그의 기본 동작 멈춤(스크롤 위로 올라감)
+			$('#file').click(); // <input> file을 클릭한 효과
 			
-			// 업로드 글자표시 생성
-			$('#imgUploadCheck').addClass("d-none");
+		}); // 파일 업로드 버튼 끝
+		
+		
+		// <input id="file"> change 이벤트
+		$('#file').on('change', function(e) {
+			// 사용자가 이미지를 선택하는 순간 => 유효성체크 + 업로드된 파일명 노출
 			
-			let fileCheck = $(this).val();
-			if (fileCheck) {
-				// 업로드 파일 존재
-				$('#imgUploadCheck').removeClass("d-none"); // 글자 생성
-			} 
-		}); // 그림파일 변경 이벤트 끝
+			// null 처리
+			let file = e.target.files[0];
+			if (file == null) {
+				alert("null file");
+				$('#file').val("");
+				$('#file-name').text("");
+				return;
+			}
+			
+			
+			let fileName = e.target.files[0].name; 
+			// e.target=this / files[0] : 업로드한 파일 / name : 업로드 파일 이름
+			//console.log(fileName); // 실제 파일 이름
+			
+			// 확장자 유효성 체크
+			let ext = fileName.split(".").pop().toLowerCase();
+			//alert(ext);
+			if (ext != "jpg" && ext != "jpeg" && ext != "png" && ext != "gif") {
+				alert("이미지 파일만 업로드 할 수 있습니다.");
+				$('#file').val(""); // 파일 비우기★
+				$('#file-name').text(""); // 파일명 노출도 비우기
+				return;
+			}
+			
+			// 유효성 통과한 이미지의 경우, 파일 명 노출
+			$('#file-name').text(fileName);
+			
+		}); // file change 이벤트 끝
 		
 	}); // 레디이벤트 끝
 </script>

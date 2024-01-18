@@ -23,6 +23,7 @@ public class PostRestController {
 	@Autowired
 	private PostBO postBO;
 	
+	
 	// 타임라인 작성
 	@PostMapping("/create")
 	public Map<String, Object> create(
@@ -34,11 +35,19 @@ public class PostRestController {
 		int userId = (int)session.getAttribute("userId");
 		String userLoginId = (String)session.getAttribute("userLoginId");
 		
+		Map<String, Object> result = new HashMap<>();
+		
+		// 로그인 풀려있을 때 처리
+		if (userLoginId == null) {
+			result.put("code", 500);
+			result.put("error_message", "로그인을 해주세요.");
+			return result;
+		}
+		
 		// DB insert
 		PostEntity post = postBO.addPost(userId, userLoginId, content, file);
 		
 		// 응답값
-		Map<String, Object> result = new HashMap<>();
 		if (post.getId() > 0) {
 			result.put("code", 200);
 		} else {
