@@ -2,6 +2,6 @@
     pageEncoding="UTF-8"%>
 <div class="d-flex justify-content-center">
 	<div id="profile-box">
-	<h1>${profileuserId}</h1>
+		<h1>${profileuserId}</h1>
 	</div>
 </div>

@@ -29,14 +29,14 @@
 		
 		<%-- timeline 영역 --%>
 		<div class="my-5">
-			<c:forEach items="${postList}" var="post">
+			<c:forEach items="${cardViewList}" var="card">
 			<%-- 카드(반복되는 부분) --%>
 			<div class="card border rounded mt-3">
 				<%-- 글쓴이, 더보기(삭제) --%>
 				<div class="d-flex justify-content-between px-2 back-color">
 					<%-- post 글쓴이 --%>
 					<div>
-						<span class="font-weight-bold">${post.userId}</span>
+						<span class="font-weight-bold">${card.user.loginId}</span>
 					</div>
 					<%-- 삭제 더보기 버튼 --%>
 					<div>
@@ -49,11 +49,11 @@
 				<%-- 이미지  --%>
 				<div class="card-img">
 					<c:choose>
-						<c:when test="${empty post.imagePath}">
+						<c:when test="${empty card.post.imagePath}">
 							<img class="w-100" src="/static/img/no-image.png" alt="게시글 이미지">
 						</c:when>
 						<c:otherwise>
-							<img class="w-100" src="${post.imagePath}" alt="게시글 이미지">
+							<img class="w-100" src="${card.post.imagePath}" alt="게시글 이미지">
 						</c:otherwise>
 					</c:choose>
 				</div>
@@ -68,8 +68,8 @@
 				<%-- 글 내용 --%>
 				<div class="card-post m-3">
 					<%-- 글 쓴이 + 글 내용 --%>
-					<span class="font-weight-bold">${post.userId}</span>
-					<span>${post.content}</span>
+					<span class="font-weight-bold">${card.user.loginId}</span>
+					<span>${card.post.content}</span>
 				</div>
 				
 				<%-- 댓글 header 부분 --%>
@@ -87,9 +87,9 @@
 						<%-- 댓글 내용 --%>
 						<div class="card-comment m-1">
 							<%-- 댓글 작성자(userId) --%>
-							<small class="font-weight-bold">${i}</small>
+							<small class="font-weight-bold">댓글 ${i}</small>
 							<%-- 댓글 내용 --%>
-							<small>${comment.content}</small>
+							<small>댓글 내용 ${i}</small>
 								
 							<%-- 댓글 삭제 버튼 --%>
 							<a href="#" class="comment-del-btn">

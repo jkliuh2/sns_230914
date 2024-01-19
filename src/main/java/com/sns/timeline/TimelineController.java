@@ -39,7 +39,7 @@ public class TimelineController {
 //		List<PostEntity> postList = postBO.getPostListOrderByIdDesc();
 //		List<CommentEntity> commentList = commentBO.getCommentList();
 		
-		// CardView 이용 - DB select
+		// DB select - CardView 이용
 		List<CardView> cardViewList = timelineBO.generateCardView();
 		
 		
