@@ -21,13 +21,13 @@ public class PostBO {
 
 	// 모든 글 Select(최신순)
 	// input:X / output:List<PostEntity>
-	public List<PostEntity> getPostListOrderByIdDesc() {
+	public List<PostEntity> getPostEntityListOrderByIdDesc() {
 		return postRepository.findAllByOrderByIdDesc();
 	}
 	
 	// insert
 	// input:지금은 loginId, content / output:PostEntity(insert한 데이터)
-	public PostEntity addPost(int userId, String userLoginId,
+	public PostEntity addPostEntity(int userId, String userLoginId,
 			String content, MultipartFile file) {
 		
 		// DB에 넣을 이미지 경로 지정

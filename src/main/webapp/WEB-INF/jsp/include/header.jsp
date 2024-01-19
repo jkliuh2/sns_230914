@@ -5,12 +5,15 @@
 <div class="d-flex h-100 w-100">
 	<!-- logo 영역 -->
 	<div id="logo-box" class="col-5 d-flex align-items-center">
-		<a id="logo" href="/timeline/list-view"><h3>Marondalgram</h3></a>
+		<a id="logo" href="/timeline/timeline-view"><h3>Marondalgram</h3></a>
 	</div>
 	<!-- 중간 영역 -->
 	<div id="hello-user" class="col-5 d-flex justify-content-end align-items-center">
 		<c:if test="${not empty userName}">
-			<span class="font-weight-bold">${userName}님 안녕하세요!</span>
+			<%-- 로그인 사용자 이름. 프로필 창으로 이동 --%>
+			<span class="font-weight-bold">
+				<a href="/user/profile-view?userId=${userId}" id="hello-user-a">${userName}</a>님 안녕하세요!
+			</span>
 		</c:if>
 	</div>
 	<!-- 로그인or로그아웃 영역 -->

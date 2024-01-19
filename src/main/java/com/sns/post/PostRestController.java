@@ -45,7 +45,7 @@ public class PostRestController {
 		}
 		
 		// DB insert
-		PostEntity post = postBO.addPost(userId, userLoginId, content, file);
+		PostEntity post = postBO.addPostEntity(userId, userLoginId, content, file);
 		
 		// 응답값
 		if (post.getId() > 0) {

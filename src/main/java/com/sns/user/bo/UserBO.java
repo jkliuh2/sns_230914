@@ -41,4 +41,10 @@ public class UserBO {
 		return userRepository.findByLoginIdAndPassword(loginId, password);
 	}
 	
+	
+	// 유저 목록 select
+	// input: X / output: List<UserEntity>
+	public List<UserEntity> getUserEntityList() {
+		return userRepository.findAll();
+	}
 }

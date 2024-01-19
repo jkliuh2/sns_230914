@@ -3,6 +3,9 @@ header {height: 60px; background-color: #e0e0e0;}
 .contents {min-height: 300px;}
 footer {height: 50px;}
 
+/* <a> 기본 설정 */
+a, a:hover {text-decoration:none;}
+
 /* 뒷배경 색 클래스 */
 .back-color {background-color: #e0e0e0;}
 
@@ -14,8 +17,9 @@ footer {height: 50px;}
 .sign-in-out {color: #555; text-decoration: underline;}
 .sign-in-out:hover {text-decoration: none;}
 
-/* <a> 밑줄 삭제 클래스 (나중에 필요 없으면 지워도 될듯 */
-.underline-none {text-decoration: none;}
+/* user님 안녕하세요! */
+#hello-user-a {color:#000;}
+#hello-user-a:hover {color:#888;}
 
 /* 로그인+회원가입 section영역 css */
 .section-inner-box {width:550px;}
@@ -26,3 +30,4 @@ footer {height: 50px;}
 /* timeline 영역 css */
 .content-box {width:650px;}
 #post-list-header {background-color: #e0e0e0;}
+.no-wrap {white-space: nowrap;}

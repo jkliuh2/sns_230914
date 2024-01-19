@@ -48,7 +48,14 @@
 				
 				<%-- 이미지  --%>
 				<div class="card-img">
-					<img class="w-100" src="${post.imagePath}" alt="게시글 이미지">
+					<c:choose>
+						<c:when test="${empty post.imagePath}">
+							<img class="w-100" src="/static/img/no-image.png" alt="게시글 이미지">
+						</c:when>
+						<c:otherwise>
+							<img class="w-100" src="${post.imagePath}" alt="게시글 이미지">
+						</c:otherwise>
+					</c:choose>
 				</div>
 				<%-- 좋아요 --%>
 				<div class="card-like m-3">
@@ -60,7 +67,8 @@
 				
 				<%-- 글 내용 --%>
 				<div class="card-post m-3">
-					<span class="font-weight-bold">글쓴이</span>
+					<%-- 글 쓴이 + 글 내용 --%>
+					<span class="font-weight-bold">${post.userId}</span>
 					<span>${post.content}</span>
 				</div>
 				
@@ -73,24 +81,30 @@
 				<div class="card-comment-list m-2">
 					<%-- 댓글 반복문 시작지점 --%>
 					<c:forEach begin="1" end="3" var="i">
-					<%-- 댓글 내용 --%>
-					<div class="card-comment m-1">
-						<small class="font-weight-bold">작성자${i}</small>
-						<small>댓글내용${i}</small>
+					
+						<%-- 글의 postId = comment의 postId가 일치하면 댓글 출력 --%>
 						
-						<%-- 댓글 삭제 버튼 --%>
-						<a href="#" class="comment-del-btn">
-							<img src="/static/img/delete-button-x.png" width="10" height="10">
-						</a>
-					</div><%-- 댓글 내용 끝 --%>
+						<%-- 댓글 내용 --%>
+						<div class="card-comment m-1">
+							<%-- 댓글 작성자(userId) --%>
+							<small class="font-weight-bold">${i}</small>
+							<%-- 댓글 내용 --%>
+							<small>${comment.content}</small>
+								
+							<%-- 댓글 삭제 버튼 --%>
+							<a href="#" class="comment-del-btn">
+								<img src="/static/img/delete-button-x.png" width="10" height="10">
+							</a>
+						</div><%-- 댓글 내용 끝 --%>
+						
+						
+					
 					</c:forEach> <%-- 댓글 반복문 끝 --%>
 					
 					<%-- 댓글 쓰기 영역 --%>
-					<div>
-						<form class="commentCreateForm" method="post" action="/comment/create">
-							<input type="text" name="content" class="form-control">
-							<button type="submit" data-post-id="${post.id}" class="commentBtn btn btn-info">게시</button>
-						</form>
+					<div class="d-flex border-top">
+						<input type="text" name="content" class="form-control mr-2">
+						<button type="submit" data-post-id="${post.id}" data-user-id="${userId}" class="commentBtn btn btn-info no-wrap">게시</button>
 					</div>
 					
 				</div><%-- 댓글 목록 끝 --%>
@@ -105,11 +119,49 @@
 	$(document).ready(function() {
 		
 		// 댓글 쓰기 버튼 클릭 이벤트(form)
-		$('.commentCreateForm').submit(function(e) {
-			e.preventDefault();
-			let buttonId = $(this).data("post-id");
-			alert(buttonId);
-		});
+		$('.commentBtn').on('click', function() {
+			//alert("댓글 쓰기");
+			
+			// 로그인 된 사람의 userId - 이것도 그냥 버튼에 심어 뒀다.
+			let userId = $(this).data('user-id'); 
+			if (!userId) {
+				// 비-로그인 이면 로그인 화면 이동
+				alert("로그인을 해주세요.");
+				location.href="/user/sign-in-view";
+				return;
+			}
+			
+			// 댓글다는 글(post)의 id
+			let postId = $(this).data("post-id");
+			
+			// ★ 방금 클릭된 버튼의 "근처의" input값 가져오기
+			// 1. 클릭된 버튼의 바로 위의 (이전 태그의) input 값 가져오기
+			//let content = $(this).prev().val().trim();
+			
+			// 2. 방금 클릭된 버튼의 상위 div 내의 (형제 태그의) input 가져오기
+			let content = $(this).siblings("input").val().trim();
+			//alert(content);
+			
+			// AJAX - create
+			$.ajax({
+				// request
+				type:"POST"
+				, url:"/comment/create"
+				, data:{"userId":userId, "postId":postId, "content":content}
+				
+				// response
+				, success:function(data) {
+					if (data.code == 200) {
+						// 댓글 생성 성공
+						alert(data.result); // "댓글을 작성했습니다."
+						location.reload();
+					}
+				}
+				, error:function(request, status, error) {
+					alert("댓글 쓰기에 실패했습니다. 관리자에게 문의해주세요.")
+				}
+			}); // ajax-create 끝
+		}); // 댓글 버튼 클릭 이벤트 끝
 		
 		
 		
