@@ -3,8 +3,8 @@ package com.sns.user;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -55,4 +55,11 @@ public class UserController {
 		return "redirect:/user/sign-in-view";
 	}
 	
+	
+	// 본인확인 view
+	@PostMapping("/identification-view")
+	public String identificationView(Model model) {
+		model.addAttribute("viewName", "user/identification");
+		return "template/layout";
+	}
 }

@@ -48,4 +48,11 @@ public class PostBO {
 		// insert+리턴
 		return postRepository.save(post);
 	}
+	
+	
+	// userId에 일치하는 post select(DESC)
+	// input: userId / output: List<PostEntity>
+	public List<PostEntity> getPostEntityListByUserIdOrderById(int userId) {
+		return postRepository.findByUserIdOrderByIdDesc(userId);
+	}
 }

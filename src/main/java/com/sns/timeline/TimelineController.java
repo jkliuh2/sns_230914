@@ -16,12 +16,6 @@ import com.sns.timeline.card.CardView;
 public class TimelineController {
 // view Controller
 	
-//	@Autowired
-//	private PostBO postBO;
-//	
-//	@Autowired
-//	private CommentBO commentBO;
-	
 	@Autowired
 	private TimelineBO timelineBO;
 
@@ -35,18 +29,12 @@ public class TimelineController {
 	@GetMapping("/timeline-view")
 	public String timelineView(Model model) {
 		
-		// DB select - 모든 글 select + 모든 comment select
-//		List<PostEntity> postList = postBO.getPostListOrderByIdDesc();
-//		List<CommentEntity> commentList = commentBO.getCommentList();
-		
 		// DB select - CardView 이용
 		List<CardView> cardViewList = timelineBO.generateCardView();
 		
 		
 		
 		// 응답값
-//		model.addAttribute("postList", postList);
-//		model.addAttribute("commentList", commentList);
 		model.addAttribute("cardViewList", cardViewList);
 		model.addAttribute("viewName", "timeline/timeline");
 		

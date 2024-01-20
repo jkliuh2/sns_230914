@@ -104,7 +104,7 @@
 					<%-- 댓글 쓰기 영역 --%>
 					<div class="d-flex border-top">
 						<input type="text" name="content" class="form-control mr-2">
-						<button type="submit" data-post-id="${post.id}" data-user-id="${userId}" class="commentBtn btn btn-info no-wrap">게시</button>
+						<button type="submit" data-post-id="${card.post.id}" data-user-id="${userId}" class="commentBtn btn btn-info no-wrap">게시</button>
 					</div>
 					
 				</div><%-- 댓글 목록 끝 --%>
