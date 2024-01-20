@@ -31,3 +31,18 @@ a, a:hover {text-decoration:none;}
 .content-box {width:650px;}
 #post-list-header {background-color: #e0e0e0;}
 .no-wrap {white-space: nowrap;}
+
+/* 프로필 영역 */
+.profile-box {width:700px;}
+#user-box {height:250px;}
+
+#profile-img-box {height:75%;}
+#profile-img {width:100%; height:auto;}
+
+#follow-btn-box {height:25%;}
+#followBtn {width:75px; height:40px;}
+
+#user-loginId-box {height:20%;}
+#user-field-box {height:80%;}
+
+.half-div {height:50%;}

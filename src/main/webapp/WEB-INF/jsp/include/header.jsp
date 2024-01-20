@@ -12,7 +12,7 @@
 		<c:if test="${not empty userName}">
 			<%-- 로그인 사용자 이름. 프로필 창으로 이동 --%>
 			<span class="font-weight-bold">
-				<a href="/user/profile-view?userId=${userId}" id="hello-user-a">${userName}</a>님 안녕하세요!
+				<a href="/profile/user-profile-view?userId=${userId}" id="hello-user-a">${userName}</a>님 안녕하세요!
 			</span>
 		</c:if>
 	</div>

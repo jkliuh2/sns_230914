@@ -12,9 +12,10 @@ import jakarta.servlet.http.HttpSession;
 @Controller
 public class UserController {
 // view용 컨트롤러
+	
 
 	/**
-	 * 회원가입 화면
+	 * 회원가입 화면 view
 	 * url: http://localhost:8080/user/sign-up-view
 	 * @param model
 	 * @return
@@ -27,7 +28,7 @@ public class UserController {
 	
 	
 	/**
-	 * 로그인 화면
+	 * 로그인 화면 view
 	 * http://localhost:8080/user/sign-in-view
 	 * @param model
 	 * @return
@@ -39,7 +40,7 @@ public class UserController {
 	}
 	
 	/**
-	 * 로그아웃
+	 * 로그아웃 view
 	 * @param session
 	 * @return
 	 */
@@ -54,23 +55,4 @@ public class UserController {
 		return "redirect:/user/sign-in-view";
 	}
 	
-	
-	/**
-	 * 프로필 화면 view
-	 * http://localhost:8080/user/profile-view + userId 파라미터
-	 * @param userId
-	 * @param model
-	 * @return
-	 */
-	@GetMapping("/profile-view")
-	public String profileView(
-			@RequestParam("userId") int userId,
-			Model model) {
-		
-		// model에 정보 담기
-		model.addAttribute("viewName", "user/profile");
-		model.addAttribute("profileuserId", userId);
-		
-		return "template/layout";
-	}
 }

@@ -47,4 +47,10 @@ public class UserBO {
 	public List<UserEntity> getUserEntityList() {
 		return userRepository.findAll();
 	}
+	
+	// 유저 1명 select (userId)
+	// input: id(userId) / output:UserEntity
+	public UserEntity getUserEntityByUserId(int userId) {
+		return userRepository.findById(userId).orElse(null);
+	}
 }
