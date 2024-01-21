@@ -48,3 +48,6 @@ a, a:hover {text-decoration:none;}
 .half-div {height:50%;}
 
 #user-update-btn {width:120px; height:40px;}
+
+/* 정보수정 페이지 */
+#update-box {width:800px;}

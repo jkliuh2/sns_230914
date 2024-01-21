@@ -27,7 +27,8 @@
 						<h2>${user.loginId}</h2>
 						<%-- 내 정보 수정(세션id == 프로필id) --%>
 						<c:if test="${userId == user.id}">
-							<form method="post" action="/user/identification-view">
+							<form id="user-update-form" method="post" action="/user/update-view">
+								<input class="d-none" name="userId" value="${user.id}">
 								<button id="user-update-btn" type="submit" class="btn btn-dark ml-5">내 정보 수정</button>
 							</form>
 						</c:if>
