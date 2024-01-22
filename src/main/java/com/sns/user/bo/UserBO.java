@@ -1,7 +1,5 @@
 package com.sns.user.bo;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -41,12 +39,6 @@ public class UserBO {
 		return userRepository.findByLoginIdAndPassword(loginId, password);
 	}
 	
-	
-	// 유저 목록 select
-	// input: X / output: List<UserEntity>
-	public List<UserEntity> getUserEntityList() {
-		return userRepository.findAll();
-	}
 	
 	// 유저 1명 select (userId)
 	// input: id(userId) / output:UserEntity

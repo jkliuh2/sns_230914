@@ -29,10 +29,8 @@ public class TimelineController {
 	@GetMapping("/timeline-view")
 	public String timelineView(Model model) {
 		
-		// DB select - CardView 이용
+		// DB select - CardView 이용 (BO에서 알아서 Card로 가공해서 List로 가져온다)
 		List<CardView> cardViewList = timelineBO.generateCardView();
-		
-		
 		
 		// 응답값
 		model.addAttribute("cardViewList", cardViewList);

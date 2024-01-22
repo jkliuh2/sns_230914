@@ -4,7 +4,7 @@ header {height: 60px; background-color: #e0e0e0;}
 footer {height: 50px;}
 
 /* <a> 기본 설정 */
-a, a:hover {text-decoration:none;}
+a, a:hover {color:#000; text-decoration:none;}
 
 /* 뒷배경 색 클래스 */
 .back-color {background-color: #e0e0e0;}
@@ -31,6 +31,7 @@ a, a:hover {text-decoration:none;}
 .content-box {width:650px;}
 #post-list-header {background-color: #e0e0e0;}
 .no-wrap {white-space: nowrap;}
+.user-profile-link:hover {color:#999;}
 
 /* 프로필 영역 */
 .profile-box {width:700px;}

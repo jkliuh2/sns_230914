@@ -6,6 +6,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.sns.comment.bo.CommentBO;
+import com.sns.comment.domain.CommentView;
 import com.sns.post.bo.PostBO;
 import com.sns.post.entity.PostEntity;
 import com.sns.timeline.card.CardView;
@@ -20,6 +22,9 @@ public class TimelineBO {
 	
 	@Autowired
 	private UserBO userBO;
+	
+	@Autowired
+	private CommentBO commentBO;
 
 	
 	// 타임라인에 뿌릴 Card select하기 (모든 타임라인)
@@ -27,30 +32,30 @@ public class TimelineBO {
 	public List<CardView> generateCardView() {
 		List<CardView> cardViewList = new ArrayList<>();
 		
-		// 글 목록 + user 목록 가져온다. List
+		// post 전체 가져온다. List
 		List<PostEntity> postList = postBO.getPostEntityListOrderByIdDesc();
-		List<UserEntity> userList = userBO.getUserEntityList();
 		
 		// List 반복문 순회
 			// post => cardView  -> cardViewList에 넣기
 		for (PostEntity post : postList) {
 			// CardView 생성 + CardView에 post 넣기
 			CardView card = new CardView();
-			card.setPost(post);
+			card.setPost(post); // post-card 1:1 대응
 			
-			// 유저 목록 순회
-			for (UserEntity user : userList) {
-				// post.userId == user.id 이면 CardView에 user 정보 넣고 순회 끝
-				if (post.getUserId() == user.getId()) {
-					card.setUser(user);
-					break;
-				}
-			}
+			// 유저 정보(글쓴이) 넣기 - post의 userId로 글쓴이 정보를 가져온다.
+			UserEntity user = userBO.getUserEntityByUserId(post.getUserId());
+			card.setUser(user);
 			
-			// card를 List에 넣기
+			// 댓글 - CommentView라는 묶음데이터로 묶어서 처리.
+			List<CommentView> commentList = commentBO.generateCommentViewListByPostId(post.getId());
+			card.setCommentList(commentList);
+			
+			// 좋아요
+			
+			
+			// card를 List에 넣기 ★
 			cardViewList.add(card);
 		}
-		
 		return cardViewList;
 	}
 	
@@ -68,8 +73,16 @@ public class TimelineBO {
 		// CardViewList 만들기
 		for (PostEntity post : postList) {
 			CardView card = new CardView();
-			card.setPost(post);
-			card.setUser(user);
+			card.setPost(post); // post 넣기
+			card.setUser(user); // 글쓴이 user 넣기
+			
+			// 댓글 
+			List<CommentView> commentList = commentBO.generateCommentViewListByPostId(post.getId());
+			card.setCommentList(commentList);
+			
+			// 좋아요
+			
+			// 최종
 			cardViewList.add(card);
 		}
 		

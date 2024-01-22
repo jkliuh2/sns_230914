@@ -77,7 +77,9 @@
 						<div class="d-flex justify-content-between px-2 back-color">
 							<%-- post 글쓴이 --%>
 							<div>
-								<span class="font-weight-bold">${card.user.loginId}</span>
+								<a class="user-profile-link" href="/profile/user-profile-view?userId=${card.user.id}">
+									<span class="font-weight-bold">${card.user.loginId}</span>
+								</a>
 							</div>
 							<%-- 삭제 더보기 버튼 --%>
 							<div>
@@ -109,7 +111,9 @@
 						<%-- 글 내용 --%>
 						<div class="card-post m-3">
 							<%-- 글 쓴이 + 글 내용 --%>
-							<span class="font-weight-bold">${card.user.loginId}</span>
+							<a class="user-profile-link" href="/profile/user-profile-view?userId=${card.user.id}">
+								<span class="font-weight-bold">${card.user.loginId}</span>
+							</a>
 							<span>${card.post.content}</span>
 						</div>
 						
@@ -121,16 +125,16 @@
 						<%-- 댓글 목록 --%>
 						<div class="card-comment-list m-2">
 							<%-- 댓글 반복문 시작지점 --%>
-							<c:forEach begin="1" end="3" var="i">
+							<c:forEach items="${card.commentList}" var="commentView">
 							
-								<%-- 글의 postId = comment의 postId가 일치하면 댓글 출력 --%>
-								
 								<%-- 댓글 내용 --%>
 								<div class="card-comment m-1">
 									<%-- 댓글 작성자(userId) --%>
-									<small class="font-weight-bold">댓글 ${i}</small>
+									<a class="user-profile-link" href="/profile/user-profile-view?userId=${commentView.user.id}">
+										<small class="font-weight-bold">${commentView.user.loginId}</small>
+									</a>
 									<%-- 댓글 내용 --%>
-									<small>댓글 내용 ${i}</small>
+									<small>${commentView.comment.content}</small>
 										
 									<%-- 댓글 삭제 버튼 --%>
 									<a href="#" class="comment-del-btn">

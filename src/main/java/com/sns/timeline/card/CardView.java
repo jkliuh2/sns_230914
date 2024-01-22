@@ -1,5 +1,8 @@
 package com.sns.timeline.card;
 
+import java.util.List;
+
+import com.sns.comment.domain.CommentView;
 import com.sns.post.entity.PostEntity;
 import com.sns.user.Entity.UserEntity;
 
@@ -18,7 +21,8 @@ public class CardView {
 	// 글쓴이 정보
 	private UserEntity user;
 	
-	// 댓글들
+	// 댓글들 => CommentView(댓글들 + 댓글 쓴 사람의 유저정보)
+	private List<CommentView> commentList;
 	
 	// 좋아요 개수
 }

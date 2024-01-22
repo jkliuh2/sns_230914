@@ -35,18 +35,14 @@
 				</div>
 				<div class="my-5">
 					<span>비밀번호</span>
-					<input type="password" id="password" class="form-control" placeholder="수정할 비밀번호를 입력하세요.">
-					<small class="text-info">비밀번호 수정을 원하지 않는다면, 입력하지 않으셔도 됩니다.</small>
+					<input type="password" id="password" class="form-control" placeholder="유저 정보를 수정하시려면, 비밀번호를 입력하세요.">
 				</div>
-				<div class="my-5">
-					<span>비밀번호 확인</span>
-					<input type="password" id="confirmPassword" class="form-control" placeholder="비밀번호와 같아야 합니다.">
-				</div>
-				<%-- 뒤로, 수정 버튼 --%>
+				<%-- 뒤로, 비밀번호 수정, 수정 버튼 --%>
 				<div class="d-flex justify-content-between">
 					<a href="/profile/user-profile-view?userId=${user.id}">
 						<button class="btn btn-dark btn-lg">뒤로</button>
 					</a>
+					<button class="btn btn-primary btn-lg">비밀번호 수정</button>
 					<button class="btn btn-success btn-lg">수정</button>
 				</div>
 			</div>
