@@ -147,11 +147,11 @@
 						alert(data.success_message);
 						location.reload();
 					} else if (data.code == 501) {
-						// 세션이 버튼과 다른 유저
+						// 세션이 버튼과 다른 유저 -> 페이지 새로고침
 						alert(data.error_message);
 						location.reload();
 					} else if (data.code == 502) {
-						// 세션 만료
+						// 세션 만료 -> 로그인화면으로
 						alert(data.error_message);
 						location.href = "/user/sign-in-view";
 					} 

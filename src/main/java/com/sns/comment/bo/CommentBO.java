@@ -38,7 +38,20 @@ public class CommentBO {
 	
 	
 	// delete
-	// input:
+	// input: commentId, userId / output:int(성공:1, 실패:0)
+	public int deleteCommentByIdAndUserId(int commentId, int userId) {
+		// 삭제 대상 select
+		CommentEntity comment = commentRepository.findByIdAndUserId(commentId, userId);
+		
+		if (comment == null) {
+			// 삭제할 대상X
+			return 0;
+		} else {
+			// 삭제할 대상O
+			commentRepository.delete(comment);
+			return 1;
+		}
+	}
 	
 	
 	// select - 테이블 전체

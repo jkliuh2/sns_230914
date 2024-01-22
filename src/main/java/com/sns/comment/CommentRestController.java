@@ -86,11 +86,18 @@ public class CommentRestController {
 		}
 		
 		// DB delete (삭제되면 1, 안되면 0)
-		int rowCount;
+		int rowCount = commentBO.deleteCommentByIdAndUserId(commentId, userId);
 		
 		// 응답
-		result.put("code", 200);
-		result.put("success_message", "댓글을 삭제하였습니다.");
+		if (rowCount == 1) {
+			// 삭제 성공
+			result.put("code", 200);
+			result.put("success_message", "댓글을 삭제하였습니다.");
+		} else if (rowCount == 0) {
+			// 삭제 실패(commentId에 해당하는 코멘트가 로그인된 세션의 userId가 아님)
+			result.put("code", 501);
+			result.put("error_message", "다른 사람의 댓글입니다.");
+		}
 		
 		// return
 		return result;

@@ -9,4 +9,6 @@ import com.sns.comment.entity.CommentEntity;
 public interface CommentRepository extends JpaRepository<CommentEntity, Integer> {
 
 	public List<CommentEntity> findByPostIdOrderById(int postId);
+	
+	public CommentEntity findByIdAndUserId(int id, int userId);
 }

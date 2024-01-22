@@ -137,9 +137,11 @@
 									<small>${commentView.comment.content}</small>
 										
 									<%-- 댓글 삭제 버튼 --%>
-									<a href="#" class="comment-del-btn">
-										<img src="/static/img/delete-button-x.png" width="10" height="10">
-									</a>
+									<c:if test="${userId == commentView.user.id}">
+										<a href="#" class="comment-del-btn" data-comment-id="${commentView.comment.id}">
+											<img src="/static/img/delete-button-x.png" width="10" height="10">
+										</a>
+									</c:if>
 								</div><%-- 댓글 내용 끝 --%>
 								
 								
