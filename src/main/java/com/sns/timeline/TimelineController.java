@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.sns.timeline.bo.TimelineBO;
 import com.sns.timeline.card.CardView;
 
+import jakarta.servlet.http.HttpSession;
+
 @RequestMapping("/timeline")
 @Controller
 public class TimelineController {
@@ -27,10 +29,14 @@ public class TimelineController {
 	 * @return
 	 */
 	@GetMapping("/timeline-view")
-	public String timelineView(Model model) {
+	public String timelineView(Model model,
+			HttpSession session) {
+		
+		// 로그인 userId 가져오기
+		Integer userId = (Integer)session.getAttribute("userId");
 		
 		// DB select - CardView 이용 (BO에서 알아서 Card로 가공해서 List로 가져온다)
-		List<CardView> cardViewList = timelineBO.generateCardView();
+		List<CardView> cardViewList = timelineBO.generateCardView(userId);
 		
 		// 응답값
 		model.addAttribute("cardViewList", cardViewList);

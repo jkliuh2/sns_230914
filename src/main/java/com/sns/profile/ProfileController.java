@@ -14,6 +14,8 @@ import com.sns.timeline.card.CardView;
 import com.sns.user.Entity.UserEntity;
 import com.sns.user.bo.UserBO;
 
+import jakarta.servlet.http.HttpSession;
+
 @RequestMapping("/profile")
 @Controller
 public class ProfileController {
@@ -29,11 +31,15 @@ public class ProfileController {
 	@GetMapping("/user-profile-view")
 	public String profileView(
 			@RequestParam("userId") int userId,
+			HttpSession session,
 			Model model) {
+		
+		// 로그인 정보 가져오기
+		Integer sessionUserId = (Integer)session.getAttribute("userId");
 		
 		// DB select - UserEntity + CardView(userId)
 		UserEntity user = userBO.getUserEntityByUserId(userId); // 프로필 주인의 user 정보
-		List<CardView> cardViewList = timelineBO.generateCardViewByUserId(userId);
+		List<CardView> cardViewList = timelineBO.generateCardViewByUserEntity(sessionUserId, user);
 		// user가 작성한 타임라인의 List
 		
 		// model에 정보 담기

@@ -61,10 +61,22 @@
 				</div>
 				<%-- 좋아요 --%>
 				<div class="card-like m-3">
-					<a href="#" id="like-btn">
-						<img src="/static/img/empty-heart.png" alt="좋아요" width="18" height="18">
-					</a>
-					<span class="font-weight-bold">좋아요 n개</span>
+					<c:choose>
+						<c:when test="${card.filledLike}">
+							<%-- 채워진 하트 --%>
+							<a href="#" class="like-btn" data-post-id="${card.post.id}">
+								<img src="/static/img/fill-heart.png" alt="좋아요" width="18" height="18">
+							</a>
+						</c:when>
+						<c:otherwise>
+							<%-- 빈 하트 --%>
+							<a href="#" class="like-btn" data-post-id="${card.post.id}">
+								<img src="/static/img/empty-heart.png" alt="좋아요" width="18" height="18">
+							</a>
+						</c:otherwise>
+					</c:choose>
+						
+						<span class="font-weight-bold">좋아요 ${card.likeCount}개</span>
 				</div>
 				
 				<%-- 글 내용 --%>
@@ -96,7 +108,7 @@
 							<small>${commentView.comment.content}</small>
 								
 							<%-- 댓글 삭제 버튼(세션의 유저정보=댓글 유저정보 이면 노출) --%>
-							<c:if test="${userId == commentView.user.id}">
+							<c:if test="${userId eq commentView.user.id}">
 								<a href="#" class="comment-del-btn" data-comment-id="${commentView.comment.id}">
 									<img src="/static/img/delete-button-x.png" width="10" height="10">
 								</a>
@@ -124,6 +136,37 @@
 <script>
 	$(document).ready(function() {
 		
+		// 좋아요 토글 이벤트
+		$('.like-btn').on('click', function(e) {
+			e.preventDefault();
+			//alert("좋아요");
+			
+			let postId = $(this).data("post-id");
+			//alert(postId);
+			
+			$.ajax({
+				// request
+				url:"/like/" + postId    // 와일드카드에서 url 보낼 때
+			
+				// response
+				, success:function(data) {
+					if (data.code == 200) {
+						// 좋아요 생성or삭제 성공 => 새로고침
+						location.reload();
+					} else if (data.code == 300) {
+						// 로그인 만료 -> 로그인 페이지로 이동
+						alert(data.error_message);
+						location.href = "/user/sign-in-view";
+					}
+				}
+				, error:function(request, status, error) {
+					alert("오류가 발생했습니다. 관리자에게 문의해주세요.");
+				}
+				
+			}); // ajax 끝
+		}); // 좋아요 토글 이벤트 끝
+		
+		
 		// 댓글 삭제 버튼
 		$('.comment-del-btn').on('click', function(e) {
 			e.preventDefault(); // <a> 기능 막기
@@ -131,7 +174,7 @@
 			
 			// 버튼의 data값으로 commentId 값 가져오기
 			let commentId = $(this).data("comment-id");
-			alert(commentId);
+			//alert(commentId);
 			
 			// ajax - DELETE			
 			$.ajax({
@@ -144,7 +187,7 @@
 				, success:function(data) {
 					if (data.code == 200) {
 						// 성공
-						alert(data.success_message);
+						alert(data.success_message); // 댓글 성공
 						location.reload();
 					} else if (data.code == 501) {
 						// 세션이 버튼과 다른 유저 -> 페이지 새로고침
