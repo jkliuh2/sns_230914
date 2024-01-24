@@ -25,7 +25,7 @@ public class LikeRestController {
 	// GET: /like/13         => @PathVariable
 	@RequestMapping("/like/{postId}")
 	public Map<String, Object> likeToggle(
-			@PathVariable(name = "postId") int postId,
+			@PathVariable(name = "postId") Integer postId,
 			HttpSession session) {
 		
 		Map<String, Object> result = new HashMap<>();

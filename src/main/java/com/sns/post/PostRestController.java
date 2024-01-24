@@ -27,7 +27,7 @@ public class PostRestController {
 	// 타임라인 작성
 	@PostMapping("/create")
 	public Map<String, Object> create(
-			@RequestParam("content") String content,
+			@RequestParam(value = "content", required = false) String content,
 			@RequestParam(value = "file", required = false) MultipartFile file,
 			HttpSession session) {
 		
