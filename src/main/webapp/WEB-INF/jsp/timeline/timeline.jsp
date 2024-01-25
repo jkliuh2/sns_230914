@@ -40,11 +40,13 @@
 							<span class="font-weight-bold">${card.user.loginId}</span>
 						</a>
 					</div>
-					<%-- 삭제 더보기 버튼 --%>
+					<%-- 삭제 더보기 버튼(로그인id == 글쓴이정보 일때 노출) --%>
 					<div>
-						<a href="#" class="more-btn">
+						<c:if test="${card.post.userId eq userId}">
+						<a href="#" class="more-btn" data-toggle="modal" data-target="#modal" data-post-id="${card.post.id}">
 							<img src="/static/img/more.png" width="25" alt="더보기 아이콘">
 						</a>
+						</c:if>
 					</div>
 				</div>
 				
@@ -131,6 +133,25 @@
 			
 		</div> <%-- 타임라인 영역 끝 --%>
 	</div> <%-- content-box 끝 --%>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-post-id="">
+	<%-- 
+		modal-sm: 작은 모달창 
+		modal-dialog-centered: 수직 기준 가운데 위치
+	--%>
+	<div class="modal-dialog modal-sm modal-dialog-centered">
+		<div class="modal-content text-center">
+			<div class="py-3 border-bottom">
+				<a href="#" id="postDelete">삭제하기</a>
+			</div>
+			<div class="py-3">
+				<a href="#" data-dismiss="modal">취소하기</a>
+			</div>
+		</div>
+	</div>
 </div>
 
 <script>
@@ -352,6 +373,46 @@
 			$('#file-name').text(fileName);
 			
 		}); // file change 이벤트 끝
+		
+		
+		// 더보기(...) 클릭 => 모달 띄우기
+		$(".more-btn").on('click', function(e) {
+			e.preventDefault(); // <a> 기능 방지
+			
+			let postId = $(this).data("post-id"); // getting. 트리거에 심어놨던 data.
+			
+			// 1개로 존재하는 모달의 재활용을 위해 data-post-id를 심는다.
+			$('#modal').data("post-id", postId); // setting
+		}); // 더보기 클릭 끝
+		
+		
+		// 모달창 삭제클릭
+		$('#modal #postDelete').on('click', function(e) {
+			e.preventDefault();
+			
+			let postId = $('#modal').data("post-id");
+			
+			$.ajax({
+				type:"DELETE"
+				, url:"/post/delete"
+				, data:{"postId":postId}
+				, success:function(data) {
+					if (data.code == 200) {
+						alert("글을 삭제하셨습니다.");
+						location.reload();
+					} else if(data.code == 500) {
+						// 세션 만료
+						alert(data.error_message);
+						location.href="/user/sign-in-view";
+					} else {
+						alert(data.error_message);
+					}
+				}
+				, error:function(request, status, error) {
+					alert("글을 삭제하는데 실패하였습니다. 관리자에게 문의해주세요.");
+				}
+			}); // ajax 끝
+		}); // 모달창 삭제버튼 클릭 끝
 		
 	}); // 레디이벤트 끝
 </script>

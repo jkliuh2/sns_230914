@@ -19,7 +19,7 @@ public class LikeBO {
 		// DB select => 결과로 이후 진행
 		if (likeMapper.selectLikeCountByPostIdOrUserId(postId, userId) > 0) {
 			// 기존 like 존재. => like delete
-			likeMapper.deleteLikeByPostIdUserId(postId, userId);
+			likeMapper.deleteLikeByPostIdOrUserId(postId, userId);
 		} else {
 			// 기존 like 없음. => like create
 			likeMapper.insertLikeByPostIdUserId(postId, userId);
@@ -47,5 +47,12 @@ public class LikeBO {
 		} else {
 			return false;
 		}
+	}
+	
+	
+	// 글 삭제시 좋아요 전체 삭제
+	public void deleteLikeByPostId(int postId) {
+		// postId로 전체 삭제
+		likeMapper.deleteLikeByPostIdOrUserId(postId, null);
 	}
 }

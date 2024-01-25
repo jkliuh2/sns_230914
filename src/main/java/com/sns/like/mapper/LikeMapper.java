@@ -30,7 +30,7 @@ public interface LikeMapper {
 	
 	// 좋아요 삭제
 	// input:postId, userId / output: int
-	public int deleteLikeByPostIdUserId(
+	public int deleteLikeByPostIdOrUserId(
 			@Param("postId") int postId, 
-			@Param("userId") int userId);
+			@Param("userId") Integer userId);
 }

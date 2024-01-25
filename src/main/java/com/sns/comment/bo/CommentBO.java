@@ -53,6 +53,13 @@ public class CommentBO {
 		}
 	}
 	
+	// delete - postId 전부
+	// input: postId / output: X
+	public void deleteCommentByPostId(int postId) {
+		// postId로 관련 행 전체 삭제
+		commentRepository.deleteCommentByPostId(postId);
+	}
+	
 	
 	// select - 테이블 전체
 	// input:X / output:List<CommentEntity>

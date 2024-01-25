@@ -52,12 +52,14 @@
  	</insert>
  	
  	<!-- 삭제 -->
- 	<delete id="deleteLikeByPostIdUserId" parameterType="map">
+ 	<delete id="deleteLikeByPostIdOrUserId" parameterType="map">
  	DELETE FROM
  		`like`
  	WHERE
  		`postId` = #{postId}
+ 		<if test="userId != null">
  		AND `userId` = #{userId}
+ 		</if>
  	</delete>
  	
  	
