@@ -124,7 +124,7 @@ public class UserRestController {
 			result.put("error_message", "존재하지 않는 사용자입니다.");
 		}
 		
-		//  리턴
+		// 리턴
 		return result;
 	}
 }
